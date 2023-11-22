@@ -1,19 +1,19 @@
-from Settings import Settings
-
 class VariableBase:
     def __init__(self, **kwargs):
+        self.settings = kwargs.get('settings', None)
         self.name = kwargs.get('name', None)
         self.__value = kwargs.get('value', None) # only accessable through getter
         self.is_constant = kwargs.get('is_constant', True)
         self.is_global = kwargs.get('is_global', False)
         self.recalculate_on_get = kwargs.get('recalculate_on_get', False)
 
-    def get_value(self, settings):
+    def get_value(self):
         if(self.is_constant):
             return self.__value
         if(self.is_global):
+            from Settings import Settings
             return Settings.shared_settings[self.name]
-        return settings.local_variables[self.name]
+        return self.settings.local_variables[self.name]
     
     
 
@@ -64,6 +64,17 @@ class File(VariableBase):
     name = 'current_file'
     def __init__(self, **kwargs):
         kwargs['name'] = File.name
+        kwargs['is_constant'] = False
+        kwargs['is_global'] = False # current file can not be global
+        super().__init__(**kwargs)
+
+    def get_value(self):
+        return super().get_value()
+    
+class FileName(VariableBase):
+    name = 'current_file_name'
+    def __init__(self, **kwargs):
+        kwargs['name'] = FileName.name
         kwargs['is_constant'] = False
         kwargs['is_global'] = False # current file can not be global
         super().__init__(**kwargs)

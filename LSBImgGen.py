@@ -34,7 +34,7 @@ class LSBImgGen:
                     vmatches = re.findall(r"\[\$[a-z].*?\]", command_text) # begins with lower case letter
                     for match in vmatches:
                         v = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == str(match)[2:-1]))
-                        v = v()
+                        v = v(settings=settings)
                         variables.append(v)
                     commands.append(Command(command_text, iterators, variables, settings))
                     print()
