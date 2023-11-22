@@ -1,9 +1,10 @@
 import queue
 import re
 import itertools
+from Settings import Settings
 
 class Command:
-    def __init__(self, command_text, iterators, variables):
+    def __init__(self, command_text, iterators, variables, settings):
         self.command_text = command_text
         self.iterators = iterators
         self.variables = variables
@@ -23,8 +24,8 @@ class Command:
                     tmp_file_name = 'tmptmptmptmp'
                     cmd_variant = re.sub(r"\[\$" + iterator_type + r":.*?\]", tmp_file_name, cmd_variant).replace(tmp_file_name, file_name)
             if(not self.variables is None):
-                for param in self.parameter:
-                    cmd_variant = cmd_variant.replace(f"[${param[0]}]", str(param[1]))
+                for var in self.variables:
+                    cmd_variant = cmd_variant.replace(f"[${var.name}]", str(var.get_value()))
             if(cmd_variant.__contains__('[$')):
                 raise Exception(f'Could not apply all parameter and iterators of command: {cmd_variant}')
             self.command_queue.put(cmd_variant)

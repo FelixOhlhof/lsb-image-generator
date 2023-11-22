@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Test.py",
+            "name": "Python: LSBImgGen.py",
             "type": "python",
             "request": "launch",
-            "program": "Test.py",
+            "program": "LSBImgGen.py",
             "console": "integratedTerminal",
             "justMyCode": true
         }
