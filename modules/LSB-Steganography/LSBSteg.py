@@ -177,7 +177,7 @@ def main():
 
     if args['encode']:
         #Handling lossy format
-        out_f, out_ext = [out_f.split(".")[-2], s.split(".")[-1]]
+        out_f, out_ext = out_f.rsplit(".", 1)
         if out_ext in lossy_formats:
             out_f = out_f + ".png"
             print("Output file changed to ", out_f)
