@@ -1,25 +1,26 @@
+from Settings import Settings
+
 class VariableBase:
     def __init__(self, **kwargs):
         self.name = kwargs.get('name', None)
-        self.__value = kwargs.get('value', None) # only accessable throug getter
+        self.__value = kwargs.get('value', None) # only accessable through getter
         self.is_constant = kwargs.get('is_constant', True)
         self.is_global = kwargs.get('is_global', False)
         self.recalculate_on_get = kwargs.get('recalculate_on_get', False)
 
-    def get_value(self):
-        #if(self.is_constant):
-            # These are thread specific and changable variables like current file or current task. 
-        # 
-            #self.local_variables = dict()
-            #return self.local_variables[self.name]
-        return self.__value
+    def get_value(self, settings):
+        if(self.is_constant):
+            return self.__value
+        if(self.is_global):
+            return Settings.shared_settings[self.name]
+        return settings.local_variables[self.name]
     
     
 
 
 # Implement new Variables here
-# Each Variable needs a static name property
-# The Name MUST start with a small letter
+# Each Variable must have a static property called "name" 
+# The name MUST start with a small letter
 
 from datetime import datetime
 class Date(VariableBase):
