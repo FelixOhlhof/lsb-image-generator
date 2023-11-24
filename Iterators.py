@@ -38,23 +38,33 @@ class IteratorBase:
 class Path(IteratorBase):
     name = 'Path'
 
-    def __init__(self, args):
-        self.path = args[0]
-        values = [join(self.path, f) for f in os.listdir(self.path) if isfile(join(self.path, f))]
-        variables = [CurrentFilePath(), CurrentFileName()]
-        super().__init__(Path.name, values, variables)
+    def __init__(self, args, variables = None):
+        try:
+            self.path = args[0]
+            values = [join(self.path, f) for f in os.listdir(self.path) if isfile(join(self.path, f))]
+            if variables is None:
+                variables = [CurrentFilePath(), CurrentFileName()]
+
+            super().__init__(Path.name, values, variables)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Iterator: {error}")
 
     
 class Integer(IteratorBase):
     name = "Integer"
     
-    def __init__(self, args):
-        values = []
-        self.start = int(args[0])
-        self.end = int(args[1])
-        self.step = int(args[2])
+    def __init__(self, args, variables = None):
+        try:
+            values = []
+            self.start = int(args[0])
+            self.end = int(args[1])
+            self.step = int(args[2])
 
-        for i in range(self.start, self.end, self.step):
-            values.append(str(i))
+            for i in range(self.start, self.end, self.step):
+                values.append(str(i))
+            if variables is None:
+                variables = [CurrentValue()]
 
-        super().__init__(Integer.name, values, [CurrentValue()])
+            super().__init__(Integer.name, values, variables)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Iterator: {error}")

@@ -7,7 +7,15 @@ def extract_variables(command_text):
     vmatches = re.findall(r"\[\$[a-z].*?\]", command_text) # begins with lower case letter
 
     for match in vmatches:
-        variable = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == str(match)[2:-1]))
+        variable_name = re.search(r"(?<=\[\$)[a-z0-9-_]*(?=[:\]])", match)[0]
+        # not fully functioning yes
+        # variable_arguments = None
+        # if ':' in match:
+        #     variable_arguments = match[match.index(':')+1:match.index(']')].split(';')
+        #     variable_arguments_dict = dict()
+        #     variable_arguments_dict[variable_arguments[0].split('=')[0]] = variable_arguments[0].split('=')[1]
+        #     print()
+        variable = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == variable_name))
         variable = variable() # initialize variable
         variables.append(variable)
 
@@ -19,18 +27,29 @@ def extract_iterators(command_text):
 
     iterators = []
     
-    matches = re.findall(r"\[\$[A-Z].*?\]", command_text) # begins with upper case letter
+    # matches = re.findall(r"\[\$[A-Z].*?\]", command_text) # begins with upper case letter
+    matches = re.findall(r"\[\$[A-Z][A-Z]*[a-z0-9-_]*(?:[:].*?.*?(?=\])\]|(?=\])\])", command_text) # begins with upper case letter
 
     for match in matches:
-        iterator_name = str(match)[2:str(match).index(':')]
+        iterator_name = re.search(r"(?<=\[\$)[A-Z][A-Z]*[a-z0-9-_]*(?=[:\]])", match)[0]
+        
+        # extracts all iterator specific variables of the command
+        iterator_variables = re.findall(rf"(?<={iterator_name}\.)[a-z0-9-_]*(?:[:].*?.*?(?=\])|(?=\]))", command_text)
+        tmp_helper_str = ' '.join([f"[${v}]" for v in iterator_variables])
+        iterator_variables = extract_variables(tmp_helper_str)
+        
         cleaned = iterator_name.rstrip(string.digits)
         iterator = getattr(Iterators, cleaned)
         iterator.name = iterator_name
-        iterator_arguments = str(match)[str(match).index(':')+1:str(match).index(']')].split(';')
-        iterators.append(iterator(iterator_arguments))
+        iterator_arguments = None
+        if ':' in match:
+            iterator_arguments = match[match.index(':')+1:match.index(']')].split(';')
+        iterators.append(iterator(iterator_arguments, iterator_variables))
     
     return iterators
 
+def extract_parameters(command_text):
+    pass
 
 def parse_ini_file():
     import configparser

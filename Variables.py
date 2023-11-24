@@ -8,7 +8,7 @@ class VariableBase:
         self.include_in_report = kwargs.get('include_in_report', True)
         self.recalculate_on_get = kwargs.get('recalculate_on_get', False)
 
-    def get_value(self):
+    def get_value(self, *args):
         if(self.is_constant):
             return self.__value
         if(self.is_global):
@@ -30,10 +30,13 @@ class Date(VariableBase):
     name = 'date'
     
     def __init__(self, **kwargs):
-        kwargs['name'] = Date.name
-        if(kwargs.get('value', None) is None):
-            kwargs['value'] = str(datetime.date)
-        super().__init__(**kwargs)
+        try:
+            kwargs['name'] = Date.name
+            if(kwargs.get('value', None) is None):
+                kwargs['value'] = str(datetime.date)
+            super().__init__(**kwargs)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     def get_value(self):
         if(self.recalculate_on_get):
@@ -44,10 +47,13 @@ class DateTime(VariableBase):
     name = 'datetime'
 
     def __init__(self, **kwargs):
-        kwargs['name'] = DateTime.name
-        if(kwargs.get('value', None) is None):
-            kwargs['value'] = str(datetime.now())
-        super().__init__(**kwargs)
+        try:
+            kwargs['name'] = DateTime.name
+            if(kwargs.get('value', None) is None):
+                kwargs['value'] = str(datetime.now())
+            super().__init__(**kwargs)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     def get_value(self):
         if(self.recalculate_on_get):
@@ -58,10 +64,13 @@ class CurrentTaskName(VariableBase):
     name = 'current_task_name'
 
     def __init__(self, **kwargs):
-        kwargs['name'] = CurrentTaskName.name
-        kwargs['is_constant'] = False
-        kwargs['is_global'] = False # current task can not be global
-        super().__init__(**kwargs)
+        try:
+            kwargs['name'] = CurrentTaskName.name
+            kwargs['is_constant'] = False
+            kwargs['is_global'] = False # current task can not be global
+            super().__init__(**kwargs)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     # def get_value(self):
     #     return super().get_value()
@@ -70,10 +79,13 @@ class CurrentFilePath(VariableBase):
     name = 'current_file_path'
 
     def __init__(self, **kwargs):
-        kwargs['name'] = CurrentFilePath.name
-        kwargs['is_constant'] = True
-        kwargs['is_global'] = False # current file can not be global
-        super().__init__(**kwargs)
+        try:
+            kwargs['name'] = CurrentFilePath.name
+            kwargs['is_constant'] = True
+            kwargs['is_global'] = False # current file can not be global
+            super().__init__(**kwargs)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     # def get_value(self):
     #     return super().get_value()
@@ -85,10 +97,13 @@ class CurrentFileName(VariableBase):
     name = 'current_file_name'
 
     def __init__(self, **kwargs):
-        kwargs['name'] = CurrentFileName.name
-        kwargs['is_constant'] = True
-        kwargs['is_global'] = False # current file can not be global
-        super().__init__(**kwargs)
+        try:
+            kwargs['name'] = CurrentFileName.name
+            kwargs['is_constant'] = True
+            kwargs['is_global'] = False # current file can not be global
+            super().__init__(**kwargs)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     # def get_value(self):
     #     return super().get_value()
@@ -100,10 +115,13 @@ class CurrentValue(VariableBase):
     name = 'current_value'
 
     def __init__(self, **kwargs):
-        kwargs['name'] = CurrentValue.name
-        kwargs['is_constant'] = True
-        kwargs['is_global'] = False # current file can not be global
-        super().__init__(**kwargs)
+        try:
+            kwargs['name'] = CurrentValue.name
+            kwargs['is_constant'] = True
+            kwargs['is_global'] = False # current file can not be global
+            super().__init__(**kwargs)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     def set_value(self, iterator):
         super().set_value(iterator.current_value)
