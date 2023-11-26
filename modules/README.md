@@ -1,1 +1,1 @@
-### pre installed tooles here
+### pre installed tools here
