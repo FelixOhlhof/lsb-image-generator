@@ -16,7 +16,7 @@ def extract_variables(command_text):
         #     variable_arguments_dict[variable_arguments[0].split('=')[0]] = variable_arguments[0].split('=')[1]
         #     print()
         variable = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == variable_name))
-        variable = variable() # initialize variable
+        variable = variable(text=match) # initialize variable
         variables.append(variable)
 
     return variables
@@ -37,6 +37,7 @@ def extract_iterators(command_text):
         iterator_variables = re.findall(rf"(?<={iterator_name}\.)[a-z0-9-_]*(?:[:].*?.*?(?=\])|(?=\]))", command_text)
         tmp_helper_str = ' '.join([f"[${v}]" for v in iterator_variables])
         iterator_variables = extract_variables(tmp_helper_str)
+        for v in iterator_variables:  v.text = f"[${iterator_name}.{v.text[2:]}"
         
         cleaned = iterator_name.rstrip(string.digits)
         iterator = getattr(Iterators, cleaned)
@@ -44,7 +45,7 @@ def extract_iterators(command_text):
         iterator_arguments = None
         if ':' in match:
             iterator_arguments = match[match.index(':')+1:match.index(']')].split(';')
-        iterators.append(iterator(iterator_arguments, iterator_variables))
+        iterators.append(iterator(iterator_arguments, match, iterator_variables))
     
     return iterators
 

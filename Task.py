@@ -1,3 +1,5 @@
+from CommandAgent import CommandAgent
+
 class Task:
     def __init__(self, name, commands):
         self.name = name
@@ -5,4 +7,5 @@ class Task:
 
     def run_commands_single_threaded(self):
         for command in self.commands:
-            command.execute_all_command_variations()
+            command_agent = CommandAgent(command)
+            command_agent.run()

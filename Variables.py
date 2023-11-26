@@ -1,7 +1,11 @@
+from datetime import datetime   
+import os
+
 class VariableBase:
     def __init__(self, **kwargs):
         self.settings = kwargs.get('settings', None)
         self.name = kwargs.get('name', None)
+        self.text = kwargs.get('text', None)
         self.__value = kwargs.get('value', None) # only accessable through getter
         self.is_constant = kwargs.get('is_constant', True)
         self.is_global = kwargs.get('is_global', False)
@@ -25,7 +29,6 @@ class VariableBase:
 # Each Variable must have a static property called "name" 
 # The name MUST start with a small letter
 
-from datetime import datetime
 class Date(VariableBase):
     name = 'date'
     
@@ -109,7 +112,7 @@ class CurrentFileName(VariableBase):
     #     return super().get_value()
     
     def set_value(self, iterator):
-        super().set_value(iterator.current_value)
+        super().set_value(os.path.basename(iterator.current_value))
 
 class CurrentValue(VariableBase):
     name = 'current_value'
