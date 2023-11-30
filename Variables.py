@@ -35,13 +35,13 @@ class Date(VariableBase):
     
     def __init__(self, args):
         try:
-            super().__init__(value=str(datetime.date) if len(args) == 0 else args[0])
+            super().__init__(value=str(datetime.date()) if len(args) == 0 else args[0])
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
 
     def get_value(self):
         if(self.recalculate_on_get):
-            return str(datetime.date)
+            return str(datetime.date())
         return super().get_value()
     
 class DateTime(VariableBase):
@@ -50,7 +50,7 @@ class DateTime(VariableBase):
 
     def __init__(self, args):
         try:
-            super().__init__(value=str(datetime.now) if len(args) == 0 else args[0])
+            super().__init__(value=str(datetime.now()) if len(args) == 0 else args[0])
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
 

@@ -20,6 +20,7 @@ if __name__=="__main__":
                 task.run_commands_single_threaded(runJustFirstCommand=True)
             else:
                 task.run_commands_single_threaded()
+            task.report()
     else:
         Util.init()
 
