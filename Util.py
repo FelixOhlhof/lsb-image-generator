@@ -1,3 +1,17 @@
+import os
+import shutil
+
+CURRENT_DIR = os.getcwd()
+INSTALL_PATH = os.path.dirname(__file__)
+CURRENT_INI_FILE = f"{CURRENT_DIR}\\tasks.ini"
+BASE_INI_FILE = f"{INSTALL_PATH}\\tasks.ini"
+INI_FILE_SYSTEM_SECTIONS = [
+    "Settings",
+    "Modules"
+]
+
+
+
 def extract_variables(command_text):
     import re
     import Variables
@@ -8,15 +22,17 @@ def extract_variables(command_text):
 
     for match in vmatches:
         variable_name = re.search(r"(?<=\[\$)[a-z0-9-_]*(?=[:\]])", match)[0]
+        variable_arguments = []
         # not fully functioning yes
         # variable_arguments = None
-        # if ':' in match:
-        #     variable_arguments = match[match.index(':')+1:match.index(']')].split(';')
-        #     variable_arguments_dict = dict()
-        #     variable_arguments_dict[variable_arguments[0].split('=')[0]] = variable_arguments[0].split('=')[1]
-        #     print()
+        if ':' in match:
+            # variable_arguments = match[match.index(':')+1:match.index(']')].split(';')
+            # variable_arguments_dict = dict()
+            # variable_arguments_dict[variable_arguments[0].split('=')[0]] = variable_arguments[0].split('=')[1]
+            variable_arguments = match[match.index(':')+1:match.index(']')].split(';')
         variable = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == variable_name))
-        variable = variable(text=match) # initialize variable
+        variable = variable(variable_arguments) # initialize variable
+        variable.text = match
         variables.append(variable)
 
     return variables
@@ -52,44 +68,7 @@ def extract_iterators(command_text):
 def extract_parameters(command_text):
     pass
 
-def parse_ini_file():
-    import configparser
-    import re
-    import Iterators
-    import Variables
-    from Command import Command
-    from Settings import Settings
-    tasks = []
-
-    config = configparser.ConfigParser()
-    config.read('tasks.ini')
-    
-    for task in config.sections():
-        settings = Settings()
-        settings.local_variables[Variables.CurrentTaskName.name] = task # Add current task name to local variables 
-        commands = []
-        for line in config[task]:  
-            if(line == 'command'):
-                command_text = config[task][line]
-                imatches = re.findall(r"\[\$[A-Z].*?\]", command_text) # begins with upper case letter
-                iterators = []
-                for match in imatches:
-                    if(str(match)[2].isupper()):
-                        i = getattr(Iterators, str(match)[2:str(match).index(':')])
-                        args = str(match)[str(match).index(':')+1:str(match).index(']')].split(';')
-                        iterators.append(i(args))
-                variables = []
-                vmatches = re.findall(r"\[\$[a-z].*?\]", command_text) # begins with lower case letter
-                for match in vmatches:
-                    v = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == str(match)[2:-1]))
-                    v = v(settings=settings)
-                    variables.append(v)
-                commands.append(Command(command_text, iterators, variables, settings))
-                print()
-
-    return tasks
-
-def get_tasks_from_ini_file(file):
+def get_tasks_from_ini_file():
     import configparser
     from Task import Task
     from Command import Command
@@ -97,9 +76,9 @@ def get_tasks_from_ini_file(file):
     tasks = []
 
     config = configparser.ConfigParser()
-    config.read(file)
+    config.read(CURRENT_INI_FILE)
 
-    for task in [t for t in config.sections() if t != 'Settings']:
+    for task in [t for t in config.sections() if t not in INI_FILE_SYSTEM_SECTIONS]:
         task_name = task
         commands = []
         report_variables = []
@@ -114,4 +93,21 @@ def get_tasks_from_ini_file(file):
         tasks.append(Task(task_name, commands))
 
     return tasks
-    
+
+def get_module_cmd(module_name):
+    import configparser
+
+    config = configparser.ConfigParser()
+    config.read(CURRENT_INI_FILE)
+
+    for module in [t for t in config.sections() if t == INI_FILE_SYSTEM_SECTIONS[1]]:
+        for line in config[module]:  
+            if(line.lower() == module_name.lower()):
+                return config[module][line]
+    raise Exception(f"Module {module_name} not found!")
+
+def init():
+    if not os.path.isfile(CURRENT_INI_FILE):
+        shutil.copy(BASE_INI_FILE, CURRENT_INI_FILE)
+    else:
+        raise Exception(f"File task.ini already existing in {CURRENT_DIR}")

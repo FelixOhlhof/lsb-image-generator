@@ -8,9 +8,10 @@
             "name": "Python: LSBImgGen.py",
             "type": "python",
             "request": "launch",
-            "program": "LSBImgGen.py",
+            "program": "lsbgen.py",
             "console": "integratedTerminal",
-            "justMyCode": true
+            "justMyCode": true,
+            "args" : ["run", "-t"]
         }
     ]
 }
