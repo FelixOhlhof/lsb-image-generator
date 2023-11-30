@@ -4,8 +4,6 @@ import os
 class VariableBase:
     def __init__(self, **kwargs):
         self.settings = kwargs.get('settings', None)
-        # self.name = kwargs.get('name', None)
-        # self.text = kwargs.get('text', None)
         self.__value = kwargs.get('value', None) # only accessable through getter
         self.is_constant = kwargs.get('is_constant', False)
         self.is_global = kwargs.get('is_global', False)
@@ -28,6 +26,8 @@ class VariableBase:
 # Implement new Variables here
 # Each Variable must have a static property called "name" and "text"
 # The name MUST start with a small letter
+# You can use arguments which must be seperated with a semicolon e.g.: [$your_variable:arg1;arg2]
+# Arguments will be passed to init method as a list 
 
 class Date(VariableBase):
     name = 'date'
@@ -35,9 +35,6 @@ class Date(VariableBase):
     
     def __init__(self, args):
         try:
-            # kwargs['name'] = Date.name
-            # if len(args) == 0:
-            #     args.append(str(datetime.date))
             super().__init__(value=str(datetime.date) if len(args) == 0 else args[0])
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
@@ -53,9 +50,6 @@ class DateTime(VariableBase):
 
     def __init__(self, args):
         try:
-            # kwargs['name'] = DateTime.name
-            # if len(args) == 0:
-            #     args.append(value=str(datetime.now) if len(args) == 0 else args[0])
             super().__init__(value=str(datetime.now) if len(args) == 0 else args[0])
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
@@ -72,7 +66,6 @@ class ModuleRunCommand(VariableBase):
     def __init__(self, args):
         try:
             import Util
-            # kwargs['name'] = ModuleRunCommand.name
             if len(args) == 0:
                 raise Exception("No module name specified!")
             super().__init__(value=Util.get_module_cmd(args[0]))
@@ -84,31 +77,21 @@ class CurrentTaskName(VariableBase):
     name = 'current_task_name'
     text = ''
 
-    def __init__(self, args):
+    def __init__(self):
         try:
-            # kwargs['name'] = CurrentTaskName.name
-            # kwargs['is_global'] = False # current value can not be global
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
-
-    # def get_value(self):
-    #     return super().get_value()
     
 class CurrentFilePath(VariableBase):
     name = 'current_file_path'
     text = ''
 
-    def __init__(self, args):
+    def __init__(self):
         try:
-            # kwargs['name'] = CurrentFilePath.name
-            # kwargs['is_global'] = False # current value can not be global
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
-
-    # def get_value(self):
-    #     return super().get_value()
     
     def set_value(self, iterator):
         super().set_value(iterator.current_value)
@@ -117,16 +100,11 @@ class CurrentFileName(VariableBase):
     name = 'current_file_name'
     text = ''
 
-    def __init__(self, args):
+    def __init__(self):
         try:
-            # kwargs['name'] = CurrentFileName.name
-            # kwargs['is_global'] = False # current value can not be global
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
-
-    # def get_value(self):
-    #     return super().get_value()
     
     def set_value(self, iterator):
         super().set_value(os.path.basename(iterator.current_value))
@@ -135,10 +113,8 @@ class CurrentValue(VariableBase):
     name = 'current_value'
     text = ''
 
-    def __init__(self, args):
+    def __init__(self):
         try:
-            # kwargs['name'] = CurrentValue.name
-            # kwargs['is_global'] = False # current value can not be global
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
@@ -150,10 +126,8 @@ class CurrentModuleName(VariableBase):
     name = 'current_module_name'
     text = ''
 
-    def __init__(self, args):
+    def __init__(self):
         try:
-            # kwargs['name'] = CurrentFileName.name
-            # kwargs['is_global'] = False # current value can not be global
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")

@@ -22,16 +22,11 @@ def extract_variables(command_text):
 
     for match in vmatches:
         variable_name = re.search(r"(?<=\[\$)[a-z0-9-_]*(?=[:\]])", match)[0]
-        variable_arguments = []
-        # not fully functioning yes
-        # variable_arguments = None
-        if ':' in match:
-            # variable_arguments = match[match.index(':')+1:match.index(']')].split(';')
-            # variable_arguments_dict = dict()
-            # variable_arguments_dict[variable_arguments[0].split('=')[0]] = variable_arguments[0].split('=')[1]
-            variable_arguments = match[match.index(':')+1:match.index(']')].split(';')
         variable = getattr(Variables, next(x[0] for x in [(name, cls) for name, cls in Variables.__dict__.items() if isinstance(cls, type)] if hasattr(x[1],'name') and x[1].name == variable_name))
-        variable = variable(variable_arguments) # initialize variable
+        if ':' in match:
+            variable = variable(match[match.index(':')+1:match.index(']')].split(';')) # initialize variable
+        else:
+            variable = variable()
         variable.text = match
         variables.append(variable)
 
