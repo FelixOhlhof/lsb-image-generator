@@ -1,5 +1,6 @@
 import Util
 import argparse
+from multiprocessing import Process
 from Settings import Settings
 
 argParser = argparse.ArgumentParser(prog='lsbgen',
@@ -13,18 +14,34 @@ argParser.add_argument('action', choices=('run', 'init'), help = ActionHelp)
 argParser.add_argument('-t', '--test', action='store_true', help="Run test: all tasks but just first command/variation")
 args = argParser.parse_args()
 
+ 
+def run_tasks_sequential(tasks):
+    for task in tasks:
+        task.run(run_just_first_command=args.test, run_commands_parallel=Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL])
+        task.report()
+     
+def run_tasks_parallel(tasks):
+    procs = []
+    for task in tasks:
+        proc = Process(target=task.run, args=(args.test, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL]))
+        procs.append(proc)
+        proc.start()
+        # task.report()
+    # complete the processes
+    for proc in procs:
+        proc.join()
+    print()
+
 if __name__=="__main__":
     Settings.load_global_settings()
 
     if args.action == "run":
         tasks = Util.get_tasks_from_ini_file()
-        for task in tasks:
-            task.run(run_just_first_command=args.test, run_commands_parallel=Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL])
-            task.report()
-    else:
+        if(Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_TASKS_PARALLEL]):
+            run_tasks_parallel(tasks)
+        else:
+            run_tasks_sequential(tasks)
+    elif args.action == "init":
         Util.init()
 
- 
 
-
-    

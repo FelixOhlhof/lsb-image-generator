@@ -1,5 +1,4 @@
-import os
-import csv
+from Settings import Settings
 from datetime import datetime
 
 class ReportAgent:
@@ -7,8 +6,7 @@ class ReportAgent:
         self.task = task
 
     def report(self):
-        import Util
-        f = open(f"{Util.CURRENT_DIR}\\report.csv", "a")
+        f = open(f"{Settings.CURRENT_DIR}\\report.csv", "a")
         f.write(f"[{self.task.name}]    {datetime.now()}")
     
         for command_agent in self.task.command_agents:

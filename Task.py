@@ -4,9 +4,8 @@ from ReportAgent import ReportAgent
 class Task:
     def __init__(self, name, commands):
         self.name = name
-        self.commands = commands
         self.command_agents = []
-        for command in self.commands:
+        for command in commands:
             self.command_agents.append(CommandAgent(command))
         self.report_agent = ReportAgent(self)
 

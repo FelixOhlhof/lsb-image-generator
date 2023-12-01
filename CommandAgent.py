@@ -14,7 +14,6 @@ class CommandAgent:
         else:
             self.__run_sequential(run_just_first_command)
     
-
     def __run_sequential(self, run_just_first_command):
         while self.command.has_next():
             cmd = ""
