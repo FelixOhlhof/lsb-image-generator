@@ -1,5 +1,5 @@
 import os
-import queue
+from multiprocessing import Queue
 from os.path import isfile, join
 from Variables import *
 
@@ -9,7 +9,7 @@ class IteratorBase:
         self.text = text
         self.values = values
         self.variables = variables        
-        self.values_queue = queue.Queue()
+        self.values_queue = Queue()
         self.current_value = None
         self.init_queue()
     

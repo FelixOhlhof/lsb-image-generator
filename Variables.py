@@ -12,10 +12,10 @@ class VariableBase:
 
     def get_value(self, *args):
         if(self.is_constant):
-            return self.settings.local_variables[self.name]
+            return self.settings.get_value(self.name)
         if(self.is_global):
             from Settings import Settings
-            return Settings.shared_settings[self.name]
+            return Settings.GLOBAL_SETTINGS[self.name]
         return self.__value
     
     def set_value(self, value):

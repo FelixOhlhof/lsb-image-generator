@@ -1,21 +1,15 @@
 import os
+import re
 import shutil
-
-CURRENT_DIR = os.getcwd()
-INSTALL_PATH = os.path.dirname(__file__)
-CURRENT_INI_FILE = f"{CURRENT_DIR}\\tasks.ini"
-BASE_INI_FILE = f"{INSTALL_PATH}\\tasks.ini"
-INI_FILE_SYSTEM_SECTIONS = [
-    "Settings",
-    "Modules"
-]
-
-
+import string
+import Variables    
+import Iterators
+import configparser
+from Task import Task
+from Command import Command
+from Settings import Settings
 
 def extract_variables(command_text):
-    import re
-    import Variables
-
     variables = []
 
     vmatches = re.findall(r"\[\$[a-z].*?\]", command_text) # begins with lower case letter
@@ -33,9 +27,6 @@ def extract_variables(command_text):
     return variables
 
 def extract_iterators(command_text):
-    import re, string
-    import Iterators
-
     iterators = []
     
     # matches = re.findall(r"\[\$[A-Z].*?\]", command_text) # begins with upper case letter
@@ -63,26 +54,33 @@ def extract_iterators(command_text):
 def extract_parameters(command_text):
     pass
 
-def get_tasks_from_ini_file():
-    import configparser
-    from Task import Task
-    from Command import Command
+def get_value_from_ini_file(section_name, setting_name):
+    config = configparser.ConfigParser()
+    config.read(Settings.CURRENT_INI_FILE)
+    
+    try:
+        return config[section_name][setting_name]
+    except Exception as error:
+        raise(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
 
+
+
+def get_tasks_from_ini_file():
     tasks = []
 
     config = configparser.ConfigParser()
-    config.read(CURRENT_INI_FILE)
+    config.read(Settings.CURRENT_INI_FILE)
 
-    for task in [t for t in config.sections() if t not in INI_FILE_SYSTEM_SECTIONS]:
+    for task in [t for t in config.sections() if t not in Settings.INI_FILE_SYSTEM_SECTIONS]:
         task_name = task
         commands = []
         report_variables = []
 
         for line in config[task]:  
-            if(line == 'command'):
+            if(line == Settings.INI_FILE_TASK_COMMAND):
                 command_text = config[task][line]
                 commands.append(Command(command_text, extract_iterators(command_text), extract_variables(command_text)))
-            if(line == 'report'):
+            if(line == Settings.INI_FILE_TASK_REPORT):
                 pass
 
         tasks.append(Task(task_name, commands))
@@ -90,19 +88,17 @@ def get_tasks_from_ini_file():
     return tasks
 
 def get_module_cmd(module_name):
-    import configparser
-
     config = configparser.ConfigParser()
-    config.read(CURRENT_INI_FILE)
+    config.read(Settings.CURRENT_INI_FILE)
 
-    for module in [t for t in config.sections() if t == INI_FILE_SYSTEM_SECTIONS[1]]:
+    for module in [t for t in config.sections() if t == Settings.INI_FILE_SYSTEM_SECTIONS[1]]:
         for line in config[module]:  
             if(line.lower() == module_name.lower()):
                 return config[module][line]
     raise Exception(f"Module {module_name} not found!")
 
 def init():
-    if not os.path.isfile(CURRENT_INI_FILE):
-        shutil.copy(BASE_INI_FILE, CURRENT_INI_FILE)
+    if not os.path.isfile(Settings.CURRENT_INI_FILE):
+        shutil.copy(Settings.BASE_INI_FILE, Settings.CURRENT_INI_FILE)
     else:
-        raise Exception(f"File task.ini already existing in {CURRENT_DIR}")
+        raise Exception(f"File task.ini already existing in {Settings.CURRENT_DIR}")

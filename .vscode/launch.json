@@ -11,7 +11,7 @@
             "program": "lsbgen.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args" : ["run", "-t"]
+            "args" : ["run"]
         }
     ]
 }

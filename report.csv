@@ -1,0 +1,30 @@
+[MyTask 1]    2023-12-01 13:18:29.316659
+Command 1: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+
+[MyTask 1]    2023-12-01 15:07:03.697260
+Command 1: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -o .\data\output\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -o .\data\output\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+
+[MyTask 1]    2023-12-01 15:25:32.626495
+Command 1: 
+[MyTask 1]    2023-12-01 15:28:55.906008
+Command 1: 
+[MyTask 1]    2023-12-01 15:30:11.552604
+Command 1: 
+[MyTask 1]    2023-12-01 15:31:32.653963
+Command 1: 
+[MyTask 1]    2023-12-01 15:32:43.177152
+Command 1: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -o .\data\output\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -o .\data\output\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+

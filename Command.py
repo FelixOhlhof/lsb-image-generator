@@ -1,16 +1,12 @@
-import queue
-import re
-import os
-import itertools
+from multiprocessing import Queue
 import copy
-from Settings import Settings
 
 class Command:
     def __init__(self, command_text, iterators, variables):
         self.command_text = command_text
         self.iterators = iterators
         self.variables = variables
-        self.command_queue = queue.Queue()
+        self.command_queue = Queue()
         self.current_command = None
 
         self.fill_comand_queue(self.iterators)

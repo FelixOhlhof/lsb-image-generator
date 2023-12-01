@@ -1,5 +1,6 @@
 import Util
 import argparse
+from Settings import Settings
 
 argParser = argparse.ArgumentParser(prog='lsbgen',
                     description='Generate LSB Images',
@@ -13,13 +14,12 @@ argParser.add_argument('-t', '--test', action='store_true', help="Run test: all 
 args = argParser.parse_args()
 
 if __name__=="__main__":
+    Settings.load_global_settings()
+
     if args.action == "run":
         tasks = Util.get_tasks_from_ini_file()
         for task in tasks:
-            if args.test:
-                task.run_commands_single_threaded(runJustFirstCommand=True)
-            else:
-                task.run_commands_single_threaded()
+            task.run(run_just_first_command=args.test, run_commands_parallel=Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL])
             task.report()
     else:
         Util.init()
