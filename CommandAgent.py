@@ -1,48 +1,45 @@
 import os
-from multiprocessing import Queue
+from Settings import Settings
+from LogItem import LogItem
 from subprocess import Popen, PIPE
 
 class CommandAgent:
     def __init__(self, command):
         self.command = command
-        self.log_queue = Queue()
-        self.procs = []
+        self.command_variants_count = self.command.command_queue.qsize()
 
-    def run(self, run_just_first_command=False, run_commands_parallel=False):
+    def run(self, logs, run_just_first_command=False, run_commands_parallel=False):
         if run_commands_parallel:
-            self.__run_parallel(run_just_first_command)
+            self.__run_parallel(logs, run_just_first_command)
         else:
-            self.__run_sequential(run_just_first_command)
+            self.__run_sequential(logs, run_just_first_command)
     
-    def __run_sequential(self, run_just_first_command):
+    def __run_sequential(self, logs, run_just_first_command):
         while self.command.has_next():
             cmd = ""
             try:
                 cmd = self.command.get_next()
                 os.system(cmd)
-                self.log_queue.put(cmd)
+                logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS, msg=cmd))
                 if run_just_first_command:
                     return
             except Exception as error:
-                self.log_queue.put(f"Error: {error} in command {cmd}")
+                logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS, msg=f"Command: {cmd} raised: {error}"))
 
-    def __run_parallel(self, run_just_first_command):
+    def __run_parallel(self, logs, run_just_first_command):
+        processes = []
+
         while self.command.has_next():
             cmd = ""
             try:
                 cmd = self.command.get_next()
-                self.procs.append(Popen(cmd, stdout=PIPE, stderr=PIPE))
+                processes.append([Popen(cmd, stdout=PIPE), cmd])
                 if(run_just_first_command): 
                     break
             except Exception as error:
-                self.log_queue.put(f"Error: {error} in command {cmd}")
-        for proc in self.procs:
-            proc.wait()
-            stdout = proc.stdout.read()
-            stderr = proc.stderr.read()
-            if stdout:
-                print(stdout)
-            if stderr:
-                print(stderr)
+                logs.append(LogItem(status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {cmd} raised: {error}"))
+        for proc in processes:
+            proc[0].wait()
+            stdout = proc[0].stdout.read()
+            logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS,executed_command=proc[1],  msg=stdout))
         print()
-            

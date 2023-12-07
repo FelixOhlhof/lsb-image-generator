@@ -1,7 +1,8 @@
 import Util
 import argparse
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 from Settings import Settings
+from ReportAgent import ReportAgent
 
 argParser = argparse.ArgumentParser(prog='lsbgen',
                     description='Generate LSB Images',
@@ -26,11 +27,10 @@ def run_tasks_parallel(tasks):
         proc = Process(target=task.run, args=(args.test, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL]))
         procs.append(proc)
         proc.start()
-        # task.report()
-    # complete the processes
     for proc in procs:
         proc.join()
-    print()
+        
+    pass
 
 if __name__=="__main__":
     Settings.load_global_settings()
@@ -41,6 +41,11 @@ if __name__=="__main__":
             run_tasks_parallel(tasks)
         else:
             run_tasks_sequential(tasks)
+        report_agent = ReportAgent(tasks)
+        if Settings.GLOBAL_SETTINGS[Settings.ENABLE_REPORT]:
+            report_agent.create_report()
+        if Settings.GLOBAL_SETTINGS[Settings.ENABLE_LOG]:
+            report_agent.create_log()
     elif args.action == "init":
         Util.init()
 

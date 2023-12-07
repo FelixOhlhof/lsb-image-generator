@@ -1,5 +1,5 @@
 from datetime import datetime   
-import os
+from pathlib import Path
 
 class VariableBase:
     def __init__(self, **kwargs):
@@ -100,14 +100,17 @@ class CurrentFileName(VariableBase):
     name = 'current_file_name'
     text = ''
 
-    def __init__(self):
+    def __init__(self, *args):
         try:
+            self.without_extension = False
+            if len(args) != 0:
+                self.without_extension = bool(args[0])
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
     
     def set_value(self, iterator):
-        super().set_value(os.path.basename(iterator.current_value))
+        super().set_value(Path(iterator.current_value).stem if self.without_extension else Path(iterator.current_value).name)
 
 class CurrentValue(VariableBase):
     name = 'current_value'

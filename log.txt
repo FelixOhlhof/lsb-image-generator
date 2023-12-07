@@ -1,0 +1,26 @@
+Created log at 07.12.2023 14:59:06
+
+Executed command: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+Status: Successful
+Output: b'Output file changed to  .\\data\\output\\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.png\r\n'
+
+Executed command: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -o .\data\output\c1.staticflickr.com-4-3893-33434875496_92b9422f49c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+Status: Successful
+Output: b'Output file changed to  .\\data\\output\\c1.staticflickr.com-4-3893-33434875496_92b9422f49c1.staticflickr.com-4-3887-33308535466_7fa9b7be64.png\r\n'
+
+Executed command: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+Status: Successful
+Output: b'Output file changed to  .\\data\\output\\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5c1.staticflickr.com-4-3888-32469363623_0731a64241.png\r\n'
+
+Executed command: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -o .\data\output\c1.staticflickr.com-4-3893-33434875496_92b9422f49c1.staticflickr.com-4-3888-32469363623_0731a64241.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+Status: Successful
+Output: b'Output file changed to  .\\data\\output\\c1.staticflickr.com-4-3893-33434875496_92b9422f49c1.staticflickr.com-4-3888-32469363623_0731a64241.png\r\n'
+
+Executed command: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -o .\data\output\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -f .\data\secrets\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5.jpg
+Status: Successful
+Output: b'Output file changed to  .\\data\\output\\c1.staticflickr.com-4-3891-33307514446_54d7ca8ea5c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.png\r\n'
+
+Executed command: python .\modules\LSB-Steganography\LSBSteg.py encode -i .\data\input\flowers-jpg\c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -o .\data\output\c1.staticflickr.com-4-3893-33434875496_92b9422f49c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.jpg -f .\data\secrets\c1.staticflickr.com-4-3893-33434875496_92b9422f49.jpg
+Status: Successful
+Output: b'Output file changed to  .\\data\\output\\c1.staticflickr.com-4-3893-33434875496_92b9422f49c1.staticflickr.com-4-3895-33276077455_c25b2f51b1.png\r\n'
+

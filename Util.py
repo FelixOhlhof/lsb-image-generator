@@ -4,7 +4,6 @@ import shutil
 import string
 import Variables    
 import Iterators
-import configparser
 from Task import Task
 from Command import Command
 from Settings import Settings
@@ -54,12 +53,16 @@ def extract_iterators(command_text):
 def extract_parameters(command_text):
     pass
 
-def get_value_from_ini_file(section_name, setting_name):
-    config = configparser.ConfigParser()
-    config.read(Settings.CURRENT_INI_FILE)
-    
+def get_value_from_ini_file(section_name, setting_name):    
     try:
-        return config[section_name][setting_name]
+        return Settings.INI_FILE[section_name][setting_name]
+    except Exception as error:
+        raise(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
+    
+def get_bool_value_from_ini_file(section_name, setting_name):    
+    try:
+        true_values = ['true', '1', 't', 'y', 'yes', '-1']
+        return Settings.INI_FILE[section_name][setting_name].lower() in true_values
     except Exception as error:
         raise(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
 
@@ -67,18 +70,13 @@ def get_value_from_ini_file(section_name, setting_name):
 
 def get_tasks_from_ini_file():
     tasks = []
-
-    config = configparser.ConfigParser()
-    config.read(Settings.CURRENT_INI_FILE)
-
-    for task in [t for t in config.sections() if t not in Settings.INI_FILE_SYSTEM_SECTIONS]:
+    for task in [t for t in Settings.INI_FILE.sections() if t not in Settings.INI_FILE_SYSTEM_SECTIONS]:
         task_name = task
         commands = []
-        report_variables = []
 
-        for line in config[task]:  
+        for line in Settings.INI_FILE[task]:  
             if(line == Settings.INI_FILE_TASK_COMMAND):
-                command_text = config[task][line]
+                command_text = Settings.INI_FILE[task][line]
                 commands.append(Command(command_text, extract_iterators(command_text), extract_variables(command_text)))
             if(line == Settings.INI_FILE_TASK_REPORT):
                 pass
@@ -88,14 +86,24 @@ def get_tasks_from_ini_file():
     return tasks
 
 def get_module_cmd(module_name):
-    config = configparser.ConfigParser()
-    config.read(Settings.CURRENT_INI_FILE)
-
-    for module in [t for t in config.sections() if t == Settings.INI_FILE_SYSTEM_SECTIONS[1]]:
-        for line in config[module]:  
+    for module in [module for module in Settings.INI_FILE.sections() if module == Settings.INI_FILE_SECTION_MODULES]:
+        for line in Settings.INI_FILE[module]:  
             if(line.lower() == module_name.lower()):
-                return config[module][line]
+                return Settings.INI_FILE[module][line]
     raise Exception(f"Module {module_name} not found!")
+
+def get_complete_section_string(section_name):
+    out = ""
+    for line in Settings.INI_FILE[section_name]:  
+        out += f"{line}={Settings.INI_FILE[section_name][line]}\n" 
+    return out
+
+def get_complete_task_section_string():
+    out = ""
+    for task in [t for t in Settings.INI_FILE.sections() if t not in Settings.INI_FILE_SYSTEM_SECTIONS]:
+        for line in Settings.INI_FILE[task]:  
+            out += f"{line}={Settings.INI_FILE[task][line]}\n"
+    return out
 
 def init():
     if not os.path.isfile(Settings.CURRENT_INI_FILE):
