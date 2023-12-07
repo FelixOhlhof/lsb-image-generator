@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import shutil
 import string
 import Variables    
@@ -47,7 +48,7 @@ def extract_iterators(command_text):
         if ':' in match:
             iterator_arguments = match[match.index(':')+1:match.index(']')].split(';')
         iterators.append(iterator(iterator_arguments, match, iterator_variables))
-    
+
     return iterators
 
 def extract_parameters(command_text):
@@ -57,14 +58,16 @@ def get_value_from_ini_file(section_name, setting_name):
     try:
         return Settings.INI_FILE[section_name][setting_name]
     except Exception as error:
-        raise(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
+        print(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
+        exit()
     
 def get_bool_value_from_ini_file(section_name, setting_name):    
     try:
         true_values = ['true', '1', 't', 'y', 'yes', '-1']
         return Settings.INI_FILE[section_name][setting_name].lower() in true_values
     except Exception as error:
-        raise(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
+        print(f"Could not retrieve Setting {section_name}:{setting_name} from ini file: {error}")
+        exit()
 
 
 
@@ -82,15 +85,19 @@ def get_tasks_from_ini_file():
                 pass
 
         tasks.append(Task(task_name, commands))
-
     return tasks
 
 def get_module_cmd(module_name):
     for module in [module for module in Settings.INI_FILE.sections() if module == Settings.INI_FILE_SECTION_MODULES]:
         for line in Settings.INI_FILE[module]:  
             if(line.lower() == module_name.lower()):
-                return Settings.INI_FILE[module][line]
-    raise Exception(f"Module {module_name} not found!")
+                cmd = Settings.INI_FILE[module][line]
+                variables = extract_variables(Settings.INI_FILE[module][line])
+                for variable in variables:
+                    cmd = cmd.replace(variable.text, variable.get_value())
+                return cmd
+    print(f"Module {module_name} not found!")
+    exit()
 
 def get_complete_section_string(section_name):
     out = ""
@@ -109,4 +116,5 @@ def init():
     if not os.path.isfile(Settings.CURRENT_INI_FILE):
         shutil.copy(Settings.BASE_INI_FILE, Settings.CURRENT_INI_FILE)
     else:
-        raise Exception(f"File task.ini already existing in {Settings.CURRENT_DIR}")
+        print(f"Error: File task.ini already existing in {Settings.CURRENT_DIR}")
+        exit()

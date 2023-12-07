@@ -33,9 +33,8 @@ def run_tasks_parallel(tasks):
     pass
 
 if __name__=="__main__":
-    Settings.load_global_settings()
-
     if args.action == "run":
+        Settings.load_global_settings()
         tasks = Util.get_tasks_from_ini_file()
         if(Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_TASKS_PARALLEL]):
             run_tasks_parallel(tasks)

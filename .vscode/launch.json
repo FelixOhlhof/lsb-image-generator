@@ -8,10 +8,11 @@
             "name": "Python: lsbgen",
             "type": "python",
             "request": "launch",
-            "program": "lsbgen.py",
+            "program": "./../lsbgen.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args" : ["run"]
+            "args" : ["run"],
+            "cwd": "./data/"
         }
     ]
 }

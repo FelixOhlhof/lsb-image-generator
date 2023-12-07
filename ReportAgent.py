@@ -18,7 +18,6 @@ class ReportAgent:
         f.write(f"{Util.get_complete_section_string(Settings.INI_FILE_SECTION_MODULES)}\n")
         f.write(f"{Util.get_complete_task_section_string()}\n")
     
-        
         f.write(f"\n")
         f.close()
 
@@ -27,6 +26,7 @@ class ReportAgent:
         f.write(f"Created log at {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}\n\n")
     
         for task in self.tasks:
+            f.write(f"Task {task.name}: \n")
             while not task.multi_process_log_queue.empty():
                 log_item = task.multi_process_log_queue.get()
                 f.write(f"Executed command: {log_item.executed_command}\nStatus: {log_item.status}\n")

@@ -134,3 +134,14 @@ class CurrentModuleName(VariableBase):
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
+        
+class InstallPath(VariableBase):
+    name = 'install_path'
+    text = ''
+
+    def __init__(self):
+        try:
+            from Settings import Settings
+            super().__init__(value=Settings.INSTALL_PATH)
+        except Exception as error:
+            raise Exception(f"Could not initialize {self.name} Variable: {error}")
