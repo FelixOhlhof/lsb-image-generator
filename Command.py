@@ -1,5 +1,5 @@
 from multiprocessing import Queue
-import copy
+import copy, sys, itertools
 
 class Command:
     def __init__(self, command_name, command_text, iterators, variables):
@@ -30,7 +30,7 @@ class Command:
             tmp = current_combination + [iterators[0]]
             self.fill_comand_queue_lazy(iterators[1:], tmp)
         iterators[0].init_queue()
-    
+
     def fill_comand_queue(self, iterators, current_combination=[]):
         if not iterators:
             current_cmd = self.command_text

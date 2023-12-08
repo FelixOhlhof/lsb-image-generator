@@ -1,5 +1,5 @@
 import os
-from multiprocessing import Queue
+from queue import Queue # due to python bug normal queue must be used
 from os.path import isfile, join
 from Variables import *
 
