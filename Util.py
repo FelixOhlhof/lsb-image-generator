@@ -85,9 +85,9 @@ def get_tasks_from_ini_file():
         commands = []
 
         for line in Settings.INI_FILE[task]:  
-            if(line == Settings.INI_FILE_TASK_COMMAND):
+            if(re.match(Settings.INI_FILE_COMMAND_NAME_PATTERN, line)):
                 command_text = Settings.INI_FILE[task][line]
-                commands.append(Command(command_text, extract_iterators(command_text), extract_variables(command_text)))
+                commands.append(Command(re.match(Settings.INI_FILE_COMMAND_NAME_PATTERN, line).string, command_text, extract_iterators(command_text), extract_variables(command_text)))
             if(line == Settings.INI_FILE_TASK_REPORT):
                 pass
 

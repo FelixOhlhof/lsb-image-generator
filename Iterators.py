@@ -10,13 +10,13 @@ class IteratorBase:
         self.values = values
         self.variables = variables        
         self.values_queue = Queue()
-        self.current_value = None
+        self.__current_value = None
         self.init_queue()
     
     def init_queue(self):
         for value in self.values:
             self.values_queue.put(value)
-        self.current_value = None
+        self.__current_value = None
 
     def has_next(self):
         return not self.values_queue.empty()
@@ -24,11 +24,14 @@ class IteratorBase:
     def get_next(self):
         if self.values_queue.empty(): 
             raise Exception('no iteratable values existing')
-        self.current_value = self.values_queue.get()
+        self.__current_value = self.values_queue.get()
         if self.variables: # update variables
             for variable in self.variables:
                 variable.set_value(self)
-        return self.current_value
+        return self.__current_value
+    
+    def get_current_value(self):
+        return self.__current_value
     
     def get_variable(self, variable_name):
         return [v for v in self.variables if v.name == variable_name][0]
@@ -46,13 +49,19 @@ class Path(IteratorBase):
             extensions = None
             if len(args) == 2:
                 extensions = args[1].lower().split(',')
-            values = [f'"{join(self.path, f)}"' for f in os.listdir(self.path) if isfile(join(self.path, f)) and (f.endswith(tuple(extensions)) if extensions else True)]
+            values = [join(self.path, f) for f in os.listdir(self.path) if isfile(join(self.path, f)) and (f.endswith(tuple(extensions)) if extensions else True)]
             if variables is None:
                 variables = [CurrentFilePath(), CurrentFileName()]
 
             super().__init__(Path.name, text, values, variables)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Iterator: {error}")
+    
+    def get_current_value(self, with_quotes=False):
+        if with_quotes:
+            return f'"{super().get_current_value()}"'
+        else:
+            return super().get_current_value()
 
     
 class Integer(IteratorBase):

@@ -2,15 +2,14 @@ from multiprocessing import Queue
 import copy
 
 class Command:
-    def __init__(self, command_text, iterators, variables):
+    def __init__(self, command_name, command_text, iterators, variables):
+        self.command_name = command_name
         self.command_text = command_text
         self.iterators = iterators
         self.variables = variables
         self.command_queue = Queue()
         self.current_command = None
-
         self.fill_comand_queue(self.iterators)
-        print(f'Successfully added {self.command_queue.qsize()} items to command queue of command: {self.command_text}!')
 
     def has_next(self):
         return not self.command_queue.empty()
@@ -36,9 +35,9 @@ class Command:
         if not iterators:
             current_cmd = self.command_text
             for iterator in current_combination:
-                current_cmd = current_cmd.replace(iterator.text, iterator.current_value)
+                current_cmd = current_cmd.replace(iterator.text, iterator.get_current_value(True))
                 for iterator_variable in iterator.variables:
-                    current_cmd = current_cmd.replace(iterator_variable.text, iterator_variable.get_value())
+                    current_cmd = current_cmd.replace(iterator_variable.text, iterator_variable.get_value(iterator))
             for variable in self.variables:
                 current_cmd = current_cmd.replace(variable.text, variable.get_value())
             if(current_cmd.__contains__('[$')):

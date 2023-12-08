@@ -2,9 +2,11 @@ import os
 from Settings import Settings
 from LogItem import LogItem
 from subprocess import Popen, PIPE
-from multiprocessing import Queue
+from queue import Queue
 import threading
 import time
+import sys
+from threading import Timer
 
 class CommandAgent:
     def __init__(self, command):
@@ -31,27 +33,52 @@ class CommandAgent:
 
     def __run_parallel(self, logs, run_just_first_command, max_commands, timeout):
         process_queue = Queue(maxsize=max_commands)
-
         queue_filler = threading.Thread(target=self.__fill_queue_async, args=(logs, run_just_first_command, process_queue,))
         queue_filler.start()
-
-        while queue_filler.is_alive():
-            process = process_queue.get()
-            process[0].wait()
-            stdout = process[0].stdout.read()
-            logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS, executed_command=process[1], msg=stdout))
+        progress_count = 0
+        while self.command.has_next() or not process_queue.empty():
+            try:
+                process = process_queue.get()
+                timer = Timer(timeout, self.__handle_timeout, [process, logs, timeout])
+                try:
+                    timer.start()
+                    process[0].wait()
+                    stdout = process[0].stdout.read()
+                    logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS, executed_command=process[1], msg=stdout))
+                finally:
+                    progress_count+=1
+                    progress(progress_count, self.command_variants_count, "Running variations:  ")
+                    timer.cancel()
+            except Exception as e:
+                pass
+        queue_filler.join()
+        print()
         
+    def __handle_timeout(self, process, logs, timeout):
+        process[0].kill()
+        logs.append(LogItem(status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {process[1]} timed out after {timeout} seconds."))
+        progress_count+=1
+        progress(progress_count, self.command_variants_count, "Running variations:  ")
 
     def __fill_queue_async(self, logs, run_just_first_command, process_queue):
         while self.command.has_next():
             cmd = ""
             try:
                 while process_queue.full():
-                    time.sleep(0.1) 
+                    time.sleep(0.05)
+                    pass
                 cmd = self.command.get_next()
                 process_queue.put([Popen(cmd, stdout=PIPE), cmd])
                 if(run_just_first_command): 
                     break
             except Exception as error:
                 logs.append(LogItem(status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {cmd} raised: {error}"))
-        print()
+
+
+def progress(count, total, status=''):
+    bar_len = 60
+    filled_len = int(round(bar_len * count / float(total)))
+    bar = '=' * filled_len + '-' * (bar_len - filled_len)
+
+    sys.stdout.write('%s[%s] %s\r' % (status, bar, f"{count}/{total}"))
+    sys.stdout.flush()

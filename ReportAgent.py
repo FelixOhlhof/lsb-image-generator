@@ -21,6 +21,7 @@ class ReportAgent:
     
         f.write(f"\n")
         f.close()
+        print("Created report")
 
     def create_log(self):
         f = open(os.path.join(Settings.CURRENT_DIR, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_LOG_FILE_NAME]), "a")
@@ -32,10 +33,5 @@ class ReportAgent:
                 log_item = task.multi_process_log_queue.get()
                 f.write(f"Executed command: {log_item.executed_command}\nStatus: {log_item.status}\n")
                 f.write(f"Output: {log_item.msg}\n\n")
-            # for command_agent in task.command_agents:
-            #     cmd_nr = task.command_agents.index(command_agent) + 1
-            #     f.write(f"\nCommand {cmd_nr}: stderr")
-            #     for log in command_agent.logs:
-            #         f.write(f"{log}\n")
-            # f.write(f"\n")
         f.close()
+        print("Created log file")
