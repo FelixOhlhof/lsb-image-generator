@@ -68,7 +68,7 @@ class CommandAgent:
                     time.sleep(0.05)
                     pass
                 cmd = self.command.get_next()
-                process_queue.put([Popen(cmd, stdout=PIPE), cmd])
+                process_queue.put([Popen(cmd, stdout=PIPE, shell=True), cmd])
                 if(run_just_first_command): 
                     break
             except Exception as error:
