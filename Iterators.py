@@ -46,7 +46,7 @@ class Path(IteratorBase):
             extensions = None
             if len(args) == 2:
                 extensions = args[1].lower().split(',')
-            values = [join(self.path, f) for f in os.listdir(self.path) if isfile(join(self.path, f)) and (f.endswith(tuple(extensions)) if extensions else True)]
+            values = [f'"{join(self.path, f)}"' for f in os.listdir(self.path) if isfile(join(self.path, f)) and (f.endswith(tuple(extensions)) if extensions else True)]
             if variables is None:
                 variables = [CurrentFilePath(), CurrentFileName()]
 
