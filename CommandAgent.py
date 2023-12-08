@@ -8,9 +8,9 @@ class CommandAgent:
         self.command = command
         self.command_variants_count = self.command.command_queue.qsize()
 
-    def run(self, logs, run_just_first_command=False, run_commands_parallel=False):
+    def run(self, logs, run_just_first_command=False, run_commands_parallel=False, max_commands=10, timeout=10):
         if run_commands_parallel:
-            self.__run_parallel(logs, run_just_first_command)
+            self.__run_parallel(logs, run_just_first_command, max_commands, timeout)
         else:
             self.__run_sequential(logs, run_just_first_command)
     
@@ -26,7 +26,7 @@ class CommandAgent:
             except Exception as error:
                 logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS, msg=f"Command: {cmd} raised: {error}"))
 
-    def __run_parallel(self, logs, run_just_first_command):
+    def __run_parallel(self, logs, run_just_first_command, max_commands, timeout):
         processes = []
 
         while self.command.has_next():
@@ -36,6 +36,13 @@ class CommandAgent:
                 processes.append([Popen(cmd, stdout=PIPE), cmd])
                 if(run_just_first_command): 
                     break
+                if len(processes) % max_commands == 0 and len(processes) != 0:
+                    print(f"Started {max_commands} Commands parallel")
+                    for proc in processes:
+                        proc[0].wait()
+                        stdout = proc[0].stdout.read()
+                        logs.append(LogItem(status=Settings.COMMAND_STATUS_SUCCESS,executed_command=proc[1],  msg=stdout))
+                    processes = []
             except Exception as error:
                 logs.append(LogItem(status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {cmd} raised: {error}"))
         for proc in processes:

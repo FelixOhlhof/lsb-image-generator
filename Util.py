@@ -60,6 +60,13 @@ def get_value_from_ini_file(section_name, setting_name):
     except Exception as error:
         print(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
         exit()
+
+def get_int_from_ini_file(section_name, setting_name):    
+    try:
+        return int(Settings.INI_FILE[section_name][setting_name])
+    except Exception as error:
+        print(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
+        exit()
     
 def get_bool_value_from_ini_file(section_name, setting_name):    
     try:

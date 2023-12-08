@@ -1,13 +1,14 @@
 from Settings import Settings
 from datetime import datetime
 import Util
+import os
 
 class ReportAgent:
     def __init__(self, tasks):
         self.tasks = tasks
 
     def create_report(self):
-        f = open(f"{Settings.CURRENT_DIR}\\{Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_REPORT_FILE_NAME]}", "a")
+        f = open(os.path.join(Settings.CURRENT_DIR, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_REPORT_FILE_NAME]), "a")
         f.write(f"Report created at: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}")
         f.write(f"Total tasks: {len(self.tasks)} ")
         for t in self.tasks:
@@ -22,7 +23,7 @@ class ReportAgent:
         f.close()
 
     def create_log(self):
-        f = open(f"{Settings.CURRENT_DIR}\\{Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_LOG_FILE_NAME]}", "a")
+        f = open(os.path.join(Settings.CURRENT_DIR, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_LOG_FILE_NAME]), "a")
         f.write(f"Created log at {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}\n\n")
     
         for task in self.tasks:

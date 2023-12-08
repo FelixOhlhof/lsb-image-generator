@@ -23,13 +23,18 @@ def run_tasks_sequential(tasks):
      
 def run_tasks_parallel(tasks):
     procs = []
-    for task in tasks:
-        proc = Process(target=task.run, args=(args.test, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL]))
+    for i in range(0, len(tasks)):
+        task = tasks[i]
+        proc = Process(target=task.run, args=(args.test, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL], Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_MAX_PARALLEL_COMMANDS], Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_MAX_COMMAND_TIMEOUT_IN_SECONDS]))
         procs.append(proc)
         proc.start()
+        if i % Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_MAX_PARALLEL_TASKS] == 0 and i != 0:
+            print("Started 10 Tasks")
+            for proc in procs:
+                proc.join()
+            procs = []
     for proc in procs:
-        proc.join()
-        
+        proc.join()   
     pass
 
 if __name__=="__main__":
