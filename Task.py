@@ -3,6 +3,9 @@ from ReportAgent import ReportAgent
 from multiprocessing import Queue
 
 class Task:
+    """
+    Represents a Task from the ini file
+    """
     def __init__(self, name, commands):
         self.name = name
         self.command_agents = []

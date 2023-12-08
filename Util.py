@@ -1,6 +1,5 @@
 import os
 import re
-import sys
 import shutil
 import string
 import Variables    
@@ -8,6 +7,8 @@ import Iterators
 from Task import Task
 from Command import Command
 from Settings import Settings
+
+"""Collection of useful methods"""
 
 def extract_variables(command_text):
     variables = []
@@ -47,7 +48,9 @@ def extract_iterators(command_text):
         iterator_arguments = None
         if ':' in match:
             iterator_arguments = match[match.index(':')+1:match.index(']')].split(';')
-        iterators.append(iterator(iterator_arguments, match, iterator_variables))
+        iterator = iterator(iterator_arguments, iterator_variables)
+        iterator.text = match
+        iterators.append(iterator)
 
     return iterators
 

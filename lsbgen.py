@@ -1,7 +1,5 @@
 import Util
 import argparse
-import sys
-from queue import Queue
 from Settings import Settings
 from ReportAgent import ReportAgent
 

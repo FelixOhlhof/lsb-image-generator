@@ -4,6 +4,9 @@ import Util
 import os
 
 class ReportAgent:
+    """
+    Standard implementation for creating a report and log file. 
+    """
     def __init__(self, tasks):
         self.tasks = tasks
 

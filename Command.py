@@ -1,7 +1,10 @@
 from multiprocessing import Queue
-import copy, sys, itertools
+import copy
 
 class Command:
+    """
+    Represents a Command from the ini file
+    """
     def __init__(self, command_name, command_text, iterators, variables):
         self.command_name = command_name
         self.command_text = command_text

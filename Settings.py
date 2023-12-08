@@ -3,6 +3,7 @@ import Util
 import configparser
 
 class Settings:
+    """Stores static settings."""
     CURRENT_DIR = os.getcwd()
     INSTALL_PATH = os.path.dirname(__file__)
     INI_FILE_NAME = "tasks.ini"

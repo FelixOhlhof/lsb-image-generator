@@ -1,8 +1,33 @@
 from datetime import datetime   
 from pathlib import Path
-import os
 
 class VariableBase:
+    """
+    Base class for Variables.
+    
+    How to add variables: 
+    1. Add a class to this file which must derive from VariableBase.
+    2. Give the class a static property called 'name'. The name must start with a small letter. This is the name you can use in the ini file.
+    3. Define an init function like so: def __init__(self, args):. 
+        args (optional)  :  list
+            The arguments passed in the init file after ':' and seperated by ';'
+    4. Implement the init function how ever you want. Just call super().__init__(...) at the end.
+        You can pass the following parameters to the base class:
+        value  :  dyn
+            the value of the variable
+        is_constant : bool
+            if True returns a local setting named like the name of the variable
+        is_global  :  bool
+            if True returns a global setting named like the name of the variable
+        include_in_report  : bool
+            if True variable will be included in report
+        recalculate_on_get  : bool
+            if True variable will be recalculated on get_value() method. You need to overwrite the get_value() method and check if recalculate_on_get is True.
+        Usually you just pass the value parameter. 
+    """
+
+    text = ''
+
     def __init__(self, **kwargs):
         self.settings = kwargs.get('settings', None)
         self.__value = kwargs.get('value', None) # only accessable through getter
@@ -32,7 +57,6 @@ class VariableBase:
 
 class Date(VariableBase):
     name = 'date'
-    text = ''
     
     def __init__(self, args):
         try:
@@ -47,7 +71,6 @@ class Date(VariableBase):
     
 class DateTime(VariableBase):
     name = 'datetime'
-    text = ''
 
     def __init__(self, args):
         try:
@@ -62,7 +85,6 @@ class DateTime(VariableBase):
     
 class ModuleRunCommand(VariableBase):
     name = 'module_cmd'
-    text = ''
 
     def __init__(self, args):
         try:
@@ -76,30 +98,15 @@ class ModuleRunCommand(VariableBase):
     
 class CurrentTaskName(VariableBase):
     name = 'current_task_name'
-    text = ''
 
     def __init__(self):
         try:
             super().__init__(is_global=False)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
-    
-class CurrentFilePath(VariableBase):
-    name = 'current_file_path'
-    text = ''
-
-    def __init__(self):
-        try:
-            super().__init__(is_global=False)
-        except Exception as error:
-            raise Exception(f"Could not initialize {self.name} Variable: {error}")
-    
-    def set_value(self, iterator):
-        super().set_value(iterator.current_value)
     
 class CurrentFileName(VariableBase):
     name = 'current_file_name'
-    text = ''
 
     def __init__(self, args=None):
         try:
@@ -126,7 +133,6 @@ class CurrentFileName(VariableBase):
 
 class CurrentValue(VariableBase):
     name = 'current_value'
-    text = ''
 
     def __init__(self):
         try:
@@ -139,7 +145,6 @@ class CurrentValue(VariableBase):
 
 class CurrentModuleName(VariableBase):
     name = 'current_module_name'
-    text = ''
 
     def __init__(self):
         try:
@@ -149,7 +154,6 @@ class CurrentModuleName(VariableBase):
         
 class InstallPath(VariableBase):
     name = 'install_path'
-    text = ''
 
     def __init__(self):
         try:

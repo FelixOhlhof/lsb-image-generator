@@ -4,9 +4,25 @@ from os.path import isfile, join
 from Variables import *
 
 class IteratorBase:
-    def __init__(self, name, text, values, variables):
-        self.name = name
-        self.text = text
+    """
+    Base class for iterators.
+    
+    How to add iterators: 
+    1. Add a class to this file which must derive from IteratorBase.
+    2. Give the class a static property called 'name'. The name must start with a big letter. This is the name you can use in the ini file.
+    3. Define an init function like so: def __init__(self, args, variables = None). 
+        args  :  list
+            The arguments passed in the init file after ':' and seperated by ';'
+        variables (optional)  :   list of Variables
+            You can implement variables for iterators which get updated each time the 'iteraterator.get_next()' method was called. The variable than must implement the 'set_value(iterator)' method.
+            You dont need to add this parameter to the __init__ function. 
+            If you just want your current iterator value you can use the [$YourIterator.current_value] variable in the command text. 
+    4. Implement the init function how ever you want. Just call super().__init__(values, variables) at the end. 
+    """
+
+    text = ''
+
+    def __init__(self, values, variables=None):
         self.values = values
         self.variables = variables        
         self.values_queue = Queue()
@@ -36,6 +52,8 @@ class IteratorBase:
     def get_variable(self, variable_name):
         return [v for v in self.variables if v.name == variable_name][0]
 
+
+
 # Implement new Iterators here
 # Each Iterator must have a static property called "name" 
 # The name MUST start with a capital letter and MUST NOT end with an number.
@@ -43,17 +61,17 @@ class IteratorBase:
 class Path(IteratorBase):
     name = 'Path'
 
-    def __init__(self, args, text, variables = None):
+    def __init__(self, args, variables = None):
         try:
             self.path = args[0]
             extensions = None
-            if len(args) == 2:
-                extensions = args[1].lower().split(',')
+            try: extensions = args[1].lower().split(',') 
+            except: pass
             values = [join(self.path, f) for f in os.listdir(self.path) if isfile(join(self.path, f)) and (f.endswith(tuple(extensions)) if extensions else True)]
             if variables is None:
                 variables = [CurrentFilePath(), CurrentFileName()]
 
-            super().__init__(Path.name, text, values, variables)
+            super().__init__(values, variables)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Iterator: {error}")
     
@@ -67,7 +85,7 @@ class Path(IteratorBase):
 class Integer(IteratorBase):
     name = "Integer"
     
-    def __init__(self, args, text, variables = None):
+    def __init__(self, args, variables = None):
         try:
             values = []
             self.start = int(args[0])
@@ -79,6 +97,6 @@ class Integer(IteratorBase):
             if variables is None:
                 variables = [CurrentValue()]
 
-            super().__init__(Integer.name, text, values, variables)
+            super().__init__(values, variables)
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Iterator: {error}")

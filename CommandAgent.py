@@ -9,6 +9,9 @@ import sys
 from threading import Timer
 
 class CommandAgent:
+    """
+    Standard implementation for consuming an command in a given way. 
+    """
     def __init__(self, command):
         self.command = command
         self.command_variants_count = self.command.command_queue.qsize()
