@@ -42,7 +42,7 @@ class CommandAgent:
         while self.command.has_next() or not process_queue.empty():
             try:
                 process = process_queue.get()
-                timer = Timer(timeout, self.__handle_timeout, [process, logs, timeout])
+                timer = Timer(timeout, self.__handle_timeout, [process, logs, timeout, progress_count])
                 try:
                     timer.start()
                     process[0].wait()
@@ -57,7 +57,7 @@ class CommandAgent:
         queue_filler.join()
         print()
         
-    def __handle_timeout(self, process, logs, timeout):
+    def __handle_timeout(self, process, logs, timeout, progress_count):
         process[0].kill()
         logs.append(LogItem(status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {process[1]} timed out after {timeout} seconds."))
         progress_count+=1
