@@ -68,10 +68,13 @@ class Path(IteratorBase):
             try: extensions = args[1].lower().split(',') 
             except: pass
             values = [join(self.path, f) for f in os.listdir(self.path) if isfile(join(self.path, f)) and (f.endswith(tuple(extensions)) if extensions else True)]
+            try: values = values[int(args[2].split(',')[0]): int(args[2].split(',')[1])]
+            except: pass
             if variables is None:
-                variables = [CurrentFilePath(), CurrentFileName()]
+                variables = [CurrentValue(), CurrentFileName()]
 
             super().__init__(values, variables)
+
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Iterator: {error}")
     

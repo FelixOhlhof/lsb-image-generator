@@ -110,7 +110,7 @@ def get_module_cmd(module_name):
     exit()
 
 def get_complete_section_string(section_name):
-    out = ""
+    out = f"[{section_name}]\n"
     for line in Settings.INI_FILE[section_name]:  
         out += f"{line}={Settings.INI_FILE[section_name][line]}\n" 
     return out
@@ -118,6 +118,7 @@ def get_complete_section_string(section_name):
 def get_complete_task_section_string():
     out = ""
     for task in [t for t in Settings.INI_FILE.sections() if t not in Settings.INI_FILE_SYSTEM_SECTIONS]:
+        out += f"[{task}]\n"
         for line in Settings.INI_FILE[task]:  
             out += f"{line}={Settings.INI_FILE[task][line]}\n"
     return out
