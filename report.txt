@@ -1,0 +1,32 @@
+Report created at: 15.12.2023 18:10:42
+
+MyTask 1 -> Execution timestamp: 2023-12-15 18:10:39.417644  Duration: 0:00:02.058455  Total command variations: 2  Total successfull: 2  Total errors: 2
+command1 -> Successfull: 2  Errors: 0
+command2 -> Successfull: 2  Errors: 0
+
+MyTask 2 -> Execution timestamp: 2023-12-15 18:10:41.476099  Duration: 0:00:01.006521  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 2  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\stegpy\steg.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input\flickr30k_images;jpg;3,5] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+command2=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input\flickr30k_images;jpg;3,5] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+[MyTask 2]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input\flickr30k_images;jpg;3,5] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
