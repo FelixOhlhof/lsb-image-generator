@@ -23,6 +23,24 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args" : ["run"]
+        },
+        {
+            "name": "stegpy",
+            "type": "python",
+            "request": "launch",
+            "program": "lsbgen.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args" : ["run", r"C:\Users\felix\Desktop\Projekte\lsb-image-generator\data\more-tigers\CHEETAH"]
+        },
+        {
+            "name": "wrapper stegpy",
+            "type": "python",
+            "request": "launch",
+            "program": "wrapper\\stegpy\\wrapper.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args" : ["data\\1.jpg", "data\\2.jpg", "data\\out.png"]
         }
     ]
 }

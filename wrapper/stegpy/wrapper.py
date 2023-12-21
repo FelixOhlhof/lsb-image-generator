@@ -61,6 +61,7 @@ def main():
         host.save()
         shutil.copy(f"_{Path(tmp_host_file).stem}.png", output_file)
         os.remove(tmp_host_file)
+        os.remove(tmp_input_file)
         os.remove(f"_{Path(tmp_host_file).stem}.png")
     else:
         host = lsb.HostElement(host_file)
