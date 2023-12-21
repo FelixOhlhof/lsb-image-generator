@@ -17,8 +17,8 @@ class ReportAgent:
             for task in self.tasks:
                 rpt = []
                 for command_agent in task.command_agents:
-                    successfull = [log.status for log in command_agent.logs].count(Settings.COMMAND_STATUS_SUCCESS)
-                    error = [log.status for log in command_agent.logs].count(Settings.COMMAND_STATUS_ERROR)
+                    successfull = [process_item.status for process_item in command_agent.finished_processes].count(Settings.COMMAND_STATUS_SUCCESS)
+                    error = [process_item.status for process_item in command_agent.finished_processes].count(Settings.COMMAND_STATUS_ERROR)
                     rpt.append((command_agent.command.command_name, successfull, error))
                 
                 file.write(f"\n{task.name} -> Execution timestamp: {task.start_time}  Duration: {task.duration}  Total command variations: {len([c[1] + c[2] for c in rpt])}  Total successfull: {len([c[1] for c in rpt])}  Total errors: {len([c[2] for c in rpt])}\n")
@@ -37,6 +37,10 @@ class ReportAgent:
             writer.writerow(["Task Name", "Command Name", "Execution timestamp", "Duration", "Status", "Executed Command", "Output Message"])
             for task in self.tasks:
                 for command_agent in task.command_agents:
-                    for log_item in command_agent.logs:
-                        writer.writerow([task.name, command_agent.command.command_name, log_item.start_time, log_item.duration, log_item.status, log_item.executed_command, log_item.msg])
+                    for process_item in command_agent.finished_processes:
+                        row = [task.name, command_agent.command.command_name, process_item.start_time, process_item.duration, process_item.status, process_item.executed_command, process_item.msg]
+                        for p in process_item.parameter:
+                            row.append(f"{p[0]}:")
+                            row.append(p[1])
+                        writer.writerow(row)
         print("Created log file")

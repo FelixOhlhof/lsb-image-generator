@@ -1,9 +1,10 @@
-class LogItem:
+class ProcessItem:
     """
     Represents a LogItem.
     The CommandAgent is responsable to instantiate new LogItems. 
     """
-    def __init__(self, **kwargs):
+    def __init__(self, process, **kwargs):
+        self.process = process
         self.start_time = kwargs.get('start_time', None)
         self.duration = kwargs.get('duration', None)
         self.status = kwargs.get('status', None)

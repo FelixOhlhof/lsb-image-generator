@@ -1,0 +1,313 @@
+Report created at: 21.12.2023 21:31:52
+Report created at: 21.12.2023 21:33:27
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:33:24.267850  Duration: 0:00:03.106323  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 21:38:52
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:38:49.316473  Duration: 0:00:03.068503  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 21:43:37
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:43:34.425687  Duration: 0:00:03.078222  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 21:48:58
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:48:55.121701  Duration: 0:00:03.292157  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 21:49:14
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:49:11.739397  Duration: 0:00:03.228453  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 21:51:29
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:51:25.844700  Duration: 0:00:03.321778  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 21:56:20
+
+MyTask 1 -> Execution timestamp: 2023-12-21 21:56:16.998897  Duration: 0:00:03.205199  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 22:01:05
+
+MyTask 1 -> Execution timestamp: 2023-12-21 22:01:01.938627  Duration: 0:00:03.143601  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 22:03:03
+
+MyTask 1 -> Execution timestamp: 2023-12-21 22:03:00.255874  Duration: 0:00:03.166857  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 22:04:10
+
+MyTask 1 -> Execution timestamp: 2023-12-21 22:04:07.347055  Duration: 0:00:03.133836  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 22:04:22
+
+MyTask 1 -> Execution timestamp: 2023-12-21 22:04:18.970581  Duration: 0:00:03.221478  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
+Report created at: 21.12.2023 22:08:55
+
+MyTask 1 -> Execution timestamp: 2023-12-21 22:08:51.844155  Duration: 0:00:03.163468  Total command variations: 1  Total successfull: 1  Total errors: 1
+command1 -> Successfull: 4  Errors: 0
+
+
+Config:
+[Settings]
+run_commands_parallel=true
+max_parallel_commands=20
+max_command_timeout_in_seconds=10
+init_commands_lazy=True
+command_agent=standard
+report_agent=standard
+enable_log=True
+enable_report=True
+log_file_name=log.csv
+report_file_name=report.txt
+
+[Modules]
+lsbsteg=python [$install_path]\modules\LSB-Steganography\LSBSteg.py
+stegpy=python [$install_path]\wrapper\stegpy\wrapper.py
+
+[MyTask 1]
+command1=[$module_cmd:LSBSteg] encode -i [$Path1:.\data\input;jpg] -o ".\data\output\[$Path2.current_file_name:False][$Path1.current_file_name]" -f [$Path2:.\data\secrets]
+
