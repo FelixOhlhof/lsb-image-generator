@@ -44,12 +44,12 @@ def extract_iterators(command_text):
         
         cleaned = iterator_name.rstrip(string.digits)
         iterator = getattr(Iterators, cleaned)
-        iterator.name = iterator_name
         iterator_arguments = None
         if ':' in match:
             iterator_arguments = match[match.index(':')+1:match.index(']')].split(';')
         iterator = iterator(iterator_arguments, iterator_variables)
         iterator.text = match
+        iterator.name = iterator_name
         iterators.append(iterator)
 
     return iterators
@@ -90,7 +90,7 @@ def get_tasks_from_ini_file():
         for line in Settings.INI_FILE[task]:  
             if(re.match(Settings.INI_FILE_COMMAND_NAME_PATTERN, line)):
                 command_text = Settings.INI_FILE[task][line]
-                commands.append(Command(re.match(Settings.INI_FILE_COMMAND_NAME_PATTERN, line).string, command_text, extract_iterators(command_text), extract_variables(command_text)))
+                commands.append(Command(re.match(Settings.INI_FILE_COMMAND_NAME_PATTERN, line).string, command_text, extract_iterators(command_text), extract_variables(command_text), Settings.GLOBAL_SETTINGS[Settings.INIT_COMMANDS_LAZY]))
             if(line == Settings.INI_FILE_TASK_REPORT):
                 pass
 

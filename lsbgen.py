@@ -18,8 +18,9 @@ def run_tasks(tasks):
     for t in tasks:
         t.run(args.test, Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_RUN_COMMANDS_PARALLEL], Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_MAX_PARALLEL_COMMANDS], Settings.GLOBAL_SETTINGS[Settings.INI_FILE_SETTINGS_MAX_COMMAND_TIMEOUT_IN_SECONDS])
     print("All tasks completed")
-    
-if __name__=="__main__":   
+
+
+if __name__=="__main__":    
     if args.action == "run":
         Settings.load_global_settings()
         tasks = Util.get_tasks_from_ini_file()

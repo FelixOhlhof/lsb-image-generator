@@ -34,11 +34,11 @@ class CommandAgent:
                 cmd = self.command.get_next()
                 start_time = datetime.now()
                 os.system(cmd)
-                self.logs.append(LogItem(command_name= self.command.command_name, status=Settings.COMMAND_STATUS_SUCCESS, executed_command=cmd, start_time=start_time, duration=datetime.now()-start_time))
+                self.logs.append(LogItem(command_name=self.command.command_name, status=Settings.COMMAND_STATUS_SUCCESS, executed_command=cmd, start_time=start_time, duration=datetime.now()-start_time))
                 if run_just_first_command:
                     return
             except Exception as error:
-                self.logs.append(LogItem(command_name= self.command.command_name, status=Settings.COMMAND_STATUS_SUCCESS, msg=f"Command: {cmd} raised: {error}", start_time=datetime.now()))
+                self.logs.append(LogItem(command_name=self.command.command_name, status=Settings.COMMAND_STATUS_SUCCESS, msg=f"Command: {cmd} raised: {error}", start_time=datetime.now()))
 
     def __run_parallel(self, run_just_first_command, max_commands, timeout):
         process_queue = Queue(maxsize=max_commands)
@@ -54,19 +54,19 @@ class CommandAgent:
                     process[0].wait()
                     endtime = datetime.now()
                     stdout = process[0].stdout.read()
-                    self.logs.append(LogItem(command_name= self.command.command_name, status=Settings.COMMAND_STATUS_SUCCESS, executed_command=process[1], msg=stdout, start_time=process[2], duration=endtime-process[2]))
+                    self.logs.append(LogItem(command_name=self.command.command_name, status=Settings.COMMAND_STATUS_SUCCESS, executed_command=process[1], msg=stdout, start_time=process[2], duration=endtime-process[2]))
                 finally:
                     progress_count+=1
                     progress(progress_count, self.command_variants_count, "Running variations:  ")
                     timer.cancel()
             except Exception as e:
-                self.logs.append(LogItem(command_name= self.command.command_name, status=Settings.COMMAND_STATUS_ERROR, executed_command=process[1], msg=e, start_time=process[2]))
+                self.logs.append(LogItem(command_name=self.command.command_name, status=Settings.COMMAND_STATUS_ERROR, executed_command=process[1], msg=e, start_time=process[2]))
         queue_filler.join()
         print()
         
     def __handle_timeout(self, process, timeout, progress_count):
         process[0].kill()
-        self.logs.append(LogItem(status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {process[1]} timed out after {timeout} seconds."))
+        self.logs.append(LogItem(command_name=self.command.command_name, status=Settings.COMMAND_STATUS_ERROR, msg=f"Command: {process[1]} timed out after {timeout} seconds."))
         progress_count+=1
         progress(progress_count, self.command_variants_count, "Running variations:  ")
 
@@ -82,7 +82,7 @@ class CommandAgent:
                 if(run_just_first_command): 
                     break
             except Exception as error:
-                self.logs.append(LogItem(command_name= self.command.command_name, status=Settings.COMMAND_STATUS_ERROR, msg=error, executed_command=cmd, start_time=datetime.now()))
+                self.logs.append(LogItem(command_name=self.command.command_name, status=Settings.COMMAND_STATUS_ERROR, msg=error, executed_command=cmd, start_time=datetime.now()))
 
 
 def progress(count, total, status=''):

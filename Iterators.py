@@ -26,13 +26,14 @@ class IteratorBase:
         self.values = values
         self.variables = variables        
         self.values_queue = Queue()
-        self.__current_value = None
+        self.current_value = None
         self.init_queue()
     
     def init_queue(self):
         for value in self.values:
             self.values_queue.put(value)
-        self.__current_value = None
+        # if self.values:
+        #     self.current_value = self.values[0]
 
     def has_next(self):
         return not self.values_queue.empty()
@@ -40,14 +41,14 @@ class IteratorBase:
     def get_next(self):
         if self.values_queue.empty(): 
             raise Exception('no iteratable values existing')
-        self.__current_value = self.values_queue.get()
+        self.current_value = self.values_queue.get()
         if self.variables: # update variables
             for variable in self.variables:
                 variable.set_value(self)
-        return self.__current_value
+        return self.current_value
     
     def get_current_value(self):
-        return self.__current_value
+        return self.current_value
     
     def get_variable(self, variable_name):
         return [v for v in self.variables if v.name == variable_name][0]

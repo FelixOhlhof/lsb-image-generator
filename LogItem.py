@@ -9,4 +9,5 @@ class LogItem:
         self.status = kwargs.get('status', None)
         self.command_name = kwargs.get('command_name', None)
         self.executed_command = kwargs.get('executed_command', None)
+        self.parameter = kwargs.get('parameter', None)
         self.msg = kwargs.get('msg', None)
