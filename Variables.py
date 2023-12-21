@@ -112,9 +112,10 @@ class CurrentFileName(VariableBase):
         try:
             self.with_file_extension = True
             self.with_quotes_around = False
-            try: self.with_file_extension = bool(args[0]) 
+            true_values = ['true', '1', 't', 'y', 'yes', '-1']
+            try: self.with_file_extension = args[0].lower() in true_values 
             except: pass
-            try: self.with_quotes_around = bool(args[1]) 
+            try: self.with_quotes_around = args[1].lower() in true_values 
             except: pass
             super().__init__(is_global=False)
         except Exception as error:
