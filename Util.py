@@ -59,14 +59,14 @@ def extract_parameters(command_text):
 
 def get_value_from_ini_file(section_name, setting_name):    
     try:
-        return Settings.INI_FILE[section_name][setting_name]
+        return strip_value(Settings.INI_FILE[section_name][setting_name])
     except Exception as error:
         print(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
         exit()
 
 def get_int_from_ini_file(section_name, setting_name):    
     try:
-        return int(Settings.INI_FILE[section_name][setting_name])
+        return int(strip_value(Settings.INI_FILE[section_name][setting_name]))
     except Exception as error:
         print(f"Could not retrieve Setting {section_name}:{section_name} from ini file: {error}")
         exit()
@@ -74,12 +74,16 @@ def get_int_from_ini_file(section_name, setting_name):
 def get_bool_value_from_ini_file(section_name, setting_name):    
     try:
         true_values = ['true', '1', 't', 'y', 'yes', '-1']
-        return Settings.INI_FILE[section_name][setting_name].lower() in true_values
+        return strip_value(Settings.INI_FILE[section_name][setting_name]).lower() in true_values
     except Exception as error:
         print(f"Could not retrieve Setting {section_name}:{setting_name} from ini file: {error}")
         exit()
 
-
+def strip_value(value):
+    try:
+        value = value[:value.index("#")]
+    except: pass
+    return value.lstrip().rstrip()
 
 def get_tasks_from_ini_file():
     tasks = []
@@ -112,7 +116,7 @@ def get_module_cmd(module_name):
 def get_complete_section_string(section_name):
     out = f"[{section_name}]\n"
     for line in Settings.INI_FILE[section_name]:  
-        out += f"{line}={Settings.INI_FILE[section_name][line]}\n" 
+        out += f"{line}={strip_value(Settings.INI_FILE[section_name][line])}\n" 
     return out
 
 def get_complete_task_section_string():

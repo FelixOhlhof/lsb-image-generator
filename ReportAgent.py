@@ -39,8 +39,9 @@ class ReportAgent:
                 for command_agent in task.command_agents:
                     for process_item in command_agent.finished_processes:
                         row = [task.name, command_agent.command.command_name, process_item.start_time, process_item.duration, process_item.status, process_item.executed_command, process_item.msg]
-                        for p in process_item.parameter:
-                            row.append(f"{p[0]}:")
-                            row.append(p[1])
+                        if(process_item.parameter):
+                            for p in process_item.parameter:
+                                row.append(f"{p[0]}:")
+                                row.append(p[1])
                         writer.writerow(row)
         print("Created log file")

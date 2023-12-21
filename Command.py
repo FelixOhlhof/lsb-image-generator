@@ -19,21 +19,20 @@ class Command:
                 self.command_queue.put(0)
         else:
             self.fill_comand_queue(self.iterators)
+        pass
         
 
     def has_next(self):
         return not self.command_queue.empty()
 
     def get_next(self):
-        if self.get_next_lazy:
-            return self.get_next_lazy()
+        if self.init_commands_lazy:
+            self.current_command = self.get_next_cmd(next(self.next_iterators))
+            return self.current_command, [[i.name, i.get_current_value()] for i in self.iterators]
         if self.command_queue.empty(): 
             raise Exception('no iteratable values existing')
         self.current_command = self.command_queue.get()
         return self.current_command[0], self.current_command[1]
-    
-    def get_next_lazy(self):
-        return self.get_next_cmd(next(self.next_iterators))
     
     def get_next_iterator_combination_lazy(self):
         iterator_values = [i.values for i in self.iterators]
@@ -78,7 +77,7 @@ class Command:
     def fill_comand_queue(self, iterators, current_combination=[]):
         if not iterators:
             current_cmd = self.get_next_cmd(current_combination)
-            self.command_queue.put([current_cmd, [v.get_current_value() for v in current_combination]])
+            self.command_queue.put([current_cmd, [[i.name, i.get_current_value()] for i in current_combination]])
             return
 
         while iterators[0].has_next():

@@ -91,8 +91,8 @@ class CommandAgent:
                 while process_queue.full():
                     time.sleep(0.05)
                     pass
-                cmd = self.command.get_next()
-                process_queue.put(ProcessItem(process=Popen(cmd, stdout=PIPE, shell=True), command_name=self.command.command_name, executed_command=cmd, start_time=datetime.now(), parameter=[[i.name, i.get_current_value()] for i in self.command.iterators]))
+                cmd, parameter = self.command.get_next()
+                process_queue.put(ProcessItem(process=Popen(cmd, stdout=PIPE, shell=True), command_name=self.command.command_name, executed_command=cmd, start_time=datetime.now(), parameter=parameter))
                 if(run_just_first_command): 
                     break
             except Exception as error:
