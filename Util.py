@@ -101,16 +101,16 @@ def get_tasks_from_ini_file():
         tasks.append(Task(task_name, commands))
     return tasks
 
-def get_module_cmd(module_name):
-    for module in [module for module in Settings.INI_FILE.sections() if module == Settings.INI_FILE_SECTION_MODULES]:
-        for line in Settings.INI_FILE[module]:  
+def get_constant(module_name):
+    for constant in [constant for constant in Settings.INI_FILE.sections() if constant == Settings.INI_FILE_SECTION_MODULES]:
+        for line in Settings.INI_FILE[constant]:  
             if(line.lower() == module_name.lower()):
-                cmd = Settings.INI_FILE[module][line]
-                variables = extract_variables(Settings.INI_FILE[module][line])
+                cmd = Settings.INI_FILE[constant][line]
+                variables = extract_variables(Settings.INI_FILE[constant][line])
                 for variable in variables:
                     cmd = cmd.replace(variable.text, variable.get_value())
                 return cmd
-    print(f"Module {module_name} not found!")
+    print(f"Constant {module_name} not found!")
     exit()
 
 def get_complete_section_string(section_name):

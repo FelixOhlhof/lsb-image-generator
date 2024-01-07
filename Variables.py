@@ -83,15 +83,15 @@ class DateTime(VariableBase):
             return str(datetime.now())
         return super().get_value()
     
-class ModuleRunCommand(VariableBase):
-    name = 'module_cmd'
+class Constant(VariableBase):
+    name = 'const'
 
     def __init__(self, args):
         try:
             import Util
             if len(args) == 0:
-                raise Exception("No module name specified!")
-            super().__init__(value=Util.get_module_cmd(args[0]))
+                raise Exception("No constant name specified!")
+            super().__init__(value=Util.get_constant(args[0]))
         except Exception as error:
             raise Exception(f"Could not initialize {self.name} Variable: {error}")
     
@@ -143,15 +143,6 @@ class CurrentValue(VariableBase):
 
     def set_value(self, iterator):
         super().set_value(iterator.current_value)
-
-class CurrentModuleName(VariableBase):
-    name = 'current_module_name'
-
-    def __init__(self):
-        try:
-            super().__init__(is_global=False)
-        except Exception as error:
-            raise Exception(f"Could not initialize {self.name} Variable: {error}")
         
 class InstallPath(VariableBase):
     name = 'install_path'
