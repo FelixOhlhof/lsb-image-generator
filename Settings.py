@@ -12,7 +12,7 @@ class Settings:
     INI_FILE = configparser.ConfigParser()
     INI_FILE.read(CURRENT_INI_FILE)
     INI_FILE_SECTION_SETTINGS = "Settings"
-    INI_FILE_SECTION_MODULES = "Modules"
+    INI_FILE_SECTION_MODULES = "Constants"
     INI_FILE_SYSTEM_SECTIONS = [
         INI_FILE_SECTION_SETTINGS,
         INI_FILE_SECTION_MODULES
